@@ -4,6 +4,11 @@ import ssl
 import json
 import os
 
+from pymongo import MongoClient
+con = MongoClient('localhost', 27017)
+db = con.get_database("demo")
+emp = db.tweet_data
+
 def postTweet(msg):
     r = api.request('statuses/update', {'status': msg})
     print('SUCCESS' if r.status_code == 200 else 'FAILURE')
@@ -17,7 +22,17 @@ def searchTweet(keywords):
     for i,item in enumerate(r):
         print(i,item['text']+'\n' if 'text' in item else item)
         dicts_search.append(item)
-
+        emp.insert({
+            "created_at" : dicts_search[i]['created_at'],
+            "id" : dicts_search[i]['id'],
+            "text" : dicts_search[i]['text'],
+            "hashtag" : dicts_search[i]['entities']['hashtags'],
+            "user_id" : dicts_search[i]['user']['screen_name'],
+            "user_name" : dicts_search[i]['user']['name'],
+            "retweet_count" : dicts_search[i]['retweet_count'],
+            "fav_count" : dicts_search[i]['favorite_count']
+        })
+    
     with open('searchTwt.json', 'w') as outfile:
         json.dump(dicts_search, outfile, ensure_ascii=False)
 
@@ -29,6 +44,19 @@ def trackingTweet(hashtag):
     for i,item in enumerate(r):
         print(i,item['text'] if 'text' in item else item)
         dicts_track.append(item)
+        emp.insert({
+            "created_at" : dicts_track[i]['created_at'],
+            "id" : dicts_track[i]['id'],
+            "text" : dicts_track[i]['text'],
+            "hashtag" : dicts_track[i]['entities']['hashtags'],
+            "user_id" : dicts_track[i]['user']['screen_name'],
+            "user_name" : dicts_track[i]['user']['name'],
+            "retweet_count" : dicts_track[i]['retweet_count'],
+            "fav_count" : dicts_track[i]['favorite_count']
+        })
+
+
+
         with open('trackTwt.json', 'w') as outfile:
             json.dump(dicts_track, outfile, ensure_ascii=False)
 
@@ -44,10 +72,10 @@ def getTrending(auth):
 ssl._create_default_https_context = ssl._create_unverified_context
 
 payloads = {
-    'consumer_key' : 'xxxx',
-    'consumer_secret' : 'xxx',
-    'access_token_key' : 'xxxx',
-    'access_token_secret' : 'xxxx'
+    'consumer_key' : 'fzxvRuTrMvFrGOsULifyGUJyC',
+    'consumer_secret' : 'nuwjhfDZPMyRSK42gzxKi8rhqohON3dvo5NBQVIxcV0pBPlnSo',
+    'access_token_key' : '970858119394807808-IgFxFXUIZRMxEDlPxwNBzSb72x1NJx4',
+    'access_token_secret' : 'JlUEodSz2Pb0mflS2uE5LIfgFfKlL9yaJWoz3aM83x6Xk'
 }
 
 # TwitterAPI : search, tracking, post
@@ -61,5 +89,5 @@ auth.set_access_token(payloads['access_token_key'], payloads['access_token_secre
 # TEST 
 # getTrending(auth)
 # searchTweet('#บุพเพสันนิวาส')
-# trackingTweet('#บุพเพสันนิวาส')
+trackingTweet('#บุพเพสันนิวาส')
 
