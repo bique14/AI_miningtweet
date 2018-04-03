@@ -4,6 +4,7 @@ import tweepy
 import ssl
 import json
 import os
+import time
 
 from pymongo import MongoClient
 con = MongoClient('localhost', 27017)
@@ -22,6 +23,8 @@ def searchTweet(keywords):
     dicts_search = []
     for i,item in enumerate(r):
         # print(i,item['text']+'\n' if 'text' in item else item)
+        
+
         date_spilt = item['created_at'].split()
         dict_item_search = {
             "created_at" : date_spilt[0]+' '+date_spilt[1]+' '+date_spilt[2],
@@ -45,7 +48,7 @@ def searchTweet(keywords):
             "retweet_count" : dicts_search[i]['retweet_count'],
             "fav_count" : dicts_search[i]['fav_count']
         })
-    
+        
     with open('searchTwt.json', 'w') as outfile:
         json.dump(dicts_search, outfile, ensure_ascii=False)
 
@@ -79,9 +82,11 @@ def trackingTweet(hashtag):
             "retweet_count" : dicts_track[i]['retweet_count'],
             "fav_count" : dicts_track[i]['fav_count']
         })
-
+        
         with open('trackTwt.json', 'w') as outfile:
             json.dump(dicts_track, outfile, ensure_ascii=False)
+        
+        time.sleep(5)
 
 def getTrending(auth):
     api = tweepy.API(auth)
@@ -95,10 +100,10 @@ def getTrending(auth):
 ssl._create_default_https_context = ssl._create_unverified_context
 
 payloads = {
-    'consumer_key' : 'fzxvRuTrMvFrGOsULifyGUJyC',
-    'consumer_secret' : 'nuwjhfDZPMyRSK42gzxKi8rhqohON3dvo5NBQVIxcV0pBPlnSo',
-    'access_token_key' : '970858119394807808-IgFxFXUIZRMxEDlPxwNBzSb72x1NJx4',
-    'access_token_secret' : 'JlUEodSz2Pb0mflS2uE5LIfgFfKlL9yaJWoz3aM83x6Xk'
+    'consumer_key' : 'x',
+    'consumer_secret' : 'x',
+    'access_token_key' : 'x',
+    'access_token_secret' : 'x'
 }
 
 # TwitterAPI : search, tracking, post
