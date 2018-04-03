@@ -20,17 +20,29 @@ def searchTweet(keywords):
     print('SUCCESS' if r.status_code == 200 else 'FAILURE')
     dicts_search = []
     for i,item in enumerate(r):
-        print(i,item['text']+'\n' if 'text' in item else item)
-        dicts_search.append(item)
+        # print(i,item['text']+'\n' if 'text' in item else item)
+        date_spilt = item['created_at'].split()
+        dict_item_search = {
+            "created_at" : date_spilt[0]+' '+date_spilt[1]+' '+date_spilt[2],
+            "id" : item['id'],
+            "text" : item['text'],
+            "hashtag" : item['entities']['hashtags'],
+            "user_id" : item['user']['screen_name'],
+            "user_name" : item['user']['name'],
+            "retweet_count" : item['retweet_count'],
+            "fav_count" : item['favorite_count']
+        }
+        dicts_search.append(dict_item_search)
+    
         emp.insert({
             "created_at" : dicts_search[i]['created_at'],
             "id" : dicts_search[i]['id'],
             "text" : dicts_search[i]['text'],
-            "hashtag" : dicts_search[i]['entities']['hashtags'],
-            "user_id" : dicts_search[i]['user']['screen_name'],
-            "user_name" : dicts_search[i]['user']['name'],
+            "hashtag" : dicts_search[i]['hashtag'],
+            "user_id" : dicts_search[i]['user_id'],
+            "user_name" : dicts_search[i]['user_name'],
             "retweet_count" : dicts_search[i]['retweet_count'],
-            "fav_count" : dicts_search[i]['favorite_count']
+            "fav_count" : dicts_search[i]['fav_count']
         })
     
     with open('searchTwt.json', 'w') as outfile:
@@ -43,19 +55,29 @@ def trackingTweet(hashtag):
     dicts_track = []
     for i,item in enumerate(r):
         print(i,item['text'] if 'text' in item else item)
-        dicts_track.append(item)
+        date_spilt = item['created_at'].split()
+        dict_item_track = {
+            "created_at" : date_spilt[0]+' '+date_spilt[1]+' '+date_spilt[2],
+            "id" : item['id'],
+            "text" : item['text'],
+            "hashtag" : item['entities']['hashtags'],
+            "user_id" : item['user']['screen_name'],
+            "user_name" : item['user']['name'],
+            "retweet_count" : item['retweet_count'],
+            "fav_count" : item['favorite_count']
+        }
+
+        dicts_track.append(dict_item_track)
         emp.insert({
             "created_at" : dicts_track[i]['created_at'],
             "id" : dicts_track[i]['id'],
             "text" : dicts_track[i]['text'],
-            "hashtag" : dicts_track[i]['entities']['hashtags'],
-            "user_id" : dicts_track[i]['user']['screen_name'],
-            "user_name" : dicts_track[i]['user']['name'],
+            "hashtag" : dicts_track[i]['hashtag'],
+            "user_id" : dicts_track[i]['user_id'],
+            "user_name" : dicts_track[i]['user_name'],
             "retweet_count" : dicts_track[i]['retweet_count'],
-            "fav_count" : dicts_track[i]['favorite_count']
+            "fav_count" : dicts_track[i]['fav_count']
         })
-
-
 
         with open('trackTwt.json', 'w') as outfile:
             json.dump(dicts_track, outfile, ensure_ascii=False)
@@ -72,10 +94,10 @@ def getTrending(auth):
 ssl._create_default_https_context = ssl._create_unverified_context
 
 payloads = {
-    'consumer_key' : 'fzxvRuTrMvFrGOsULifyGUJyC',
-    'consumer_secret' : 'nuwjhfDZPMyRSK42gzxKi8rhqohON3dvo5NBQVIxcV0pBPlnSo',
-    'access_token_key' : '970858119394807808-IgFxFXUIZRMxEDlPxwNBzSb72x1NJx4',
-    'access_token_secret' : 'JlUEodSz2Pb0mflS2uE5LIfgFfKlL9yaJWoz3aM83x6Xk'
+    'consumer_key' : 'x',
+    'consumer_secret' : 'x',
+    'access_token_key' : 'x',
+    'access_token_secret' : 'x'
 }
 
 # TwitterAPI : search, tracking, post
