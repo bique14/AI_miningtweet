@@ -10,12 +10,17 @@
 
 # b = {'Name': 'Zara', 'Age': 7, 'Class': 'First'}
 # print(type(b))
-import re
-
-r = re.compile(r'([A-Z]{1}[a-z]{2})\s([A-Z]{1}[a-z]{2})\s(\d{2})')
-s = 'Tue Apr 02'
-
-if(r.match(s)):
-    print('1')
+import random
+arr =[]
+r = random.randint(0,100)
+s = ''
+if r%2==0:
+    s = 'neg'
 else:
-    print('2')
+    s = 'pos'
+dict_list = {
+    'sentiment' : s
+}
+arr.append(dict_list)
+# print(random.randint(0,100))
+print(arr)

@@ -5,11 +5,12 @@ import ssl
 import json
 import os
 import time
+import random
 
 from pymongo import MongoClient
 con = MongoClient('localhost', 27017)
 db = con.get_database("demo")
-emp = db.tweet_data
+emp = db.tweet_datas
 
 def postTweet(msg):
     r = api.request('statuses/update', {'status': msg})
@@ -23,7 +24,12 @@ def searchTweet(keywords):
     dicts_search = []
     for i,item in enumerate(r):
         # print(i,item['text']+'\n' if 'text' in item else item)
-        
+        rnd = random.randint(0,100)
+        s = ''
+        if rnd%2==0:
+            s = 'neg'
+        else:
+            s = 'pos'
 
         date_spilt = item['created_at'].split()
         dict_item_search = {
@@ -34,7 +40,8 @@ def searchTweet(keywords):
             "user_id" : item['user']['screen_name'],
             "user_name" : item['user']['name'],
             "retweet_count" : item['retweet_count'],
-            "fav_count" : item['favorite_count']
+            "fav_count" : item['favorite_count'],
+            "sentiment" : s
         }
         dicts_search.append(dict_item_search)
     
@@ -46,7 +53,8 @@ def searchTweet(keywords):
             "user_id" : dicts_search[i]['user_id'],
             "user_name" : dicts_search[i]['user_name'],
             "retweet_count" : dicts_search[i]['retweet_count'],
-            "fav_count" : dicts_search[i]['fav_count']
+            "fav_count" : dicts_search[i]['fav_count'],
+            "sentiment" : s
         })
         
     with open('searchTwt.json', 'w') as outfile:
@@ -59,6 +67,14 @@ def trackingTweet(hashtag):
     dicts_track = []
     for i,item in enumerate(r):
         print(i,item['text'] if 'text' in item else item)
+
+        rnd = random.randint(0,100)
+        s = ''
+        if rnd%2==0:
+            s = 'neg'
+        else:
+            s = 'pos'
+
         date_spilt = item['created_at'].split()
         dict_item_track = {
             "created_at" : date_spilt[0]+' '+date_spilt[1]+' '+date_spilt[2],
@@ -68,7 +84,8 @@ def trackingTweet(hashtag):
             "user_id" : item['user']['screen_name'],
             "user_name" : item['user']['name'],
             "retweet_count" : item['retweet_count'],
-            "fav_count" : item['favorite_count']
+            "fav_count" : item['favorite_count'],
+            "sentiment" : s
         }
 
         dicts_track.append(dict_item_track)
@@ -80,13 +97,14 @@ def trackingTweet(hashtag):
             "user_id" : dicts_track[i]['user_id'],
             "user_name" : dicts_track[i]['user_name'],
             "retweet_count" : dicts_track[i]['retweet_count'],
-            "fav_count" : dicts_track[i]['fav_count']
+            "fav_count" : dicts_track[i]['fav_count'],
+            "sentiment" : s
         })
         
         with open('trackTwt.json', 'w') as outfile:
             json.dump(dicts_track, outfile, ensure_ascii=False)
         
-        time.sleep(5)
+        # time.sleep(5)
 
 def getTrending(auth):
     api = tweepy.API(auth)
@@ -100,10 +118,10 @@ def getTrending(auth):
 ssl._create_default_https_context = ssl._create_unverified_context
 
 payloads = {
-    'consumer_key' : 'x',
-    'consumer_secret' : 'x',
-    'access_token_key' : 'x',
-    'access_token_secret' : 'x'
+    'consumer_key' : 'fzxvRuTrMvFrGOsULifyGUJyC',
+    'consumer_secret' : 'nuwjhfDZPMyRSK42gzxKi8rhqohON3dvo5NBQVIxcV0pBPlnSo',
+    'access_token_key' : '970858119394807808-IgFxFXUIZRMxEDlPxwNBzSb72x1NJx4',
+    'access_token_secret' : 'JlUEodSz2Pb0mflS2uE5LIfgFfKlL9yaJWoz3aM83x6Xk'
 }
 
 # TwitterAPI : search, tracking, post
@@ -116,6 +134,6 @@ auth.set_access_token(payloads['access_token_key'], payloads['access_token_secre
 
 # TEST 
 # getTrending(auth)
-# searchTweet('#บุพเพสันนิวาส')
-trackingTweet('#บุพเพสันนิวาส')
+searchTweet('#BNK48')
+# trackingTweet('#BNK48')
 
