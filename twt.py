@@ -37,7 +37,11 @@ def searchTweet(keywords):
             "user_name" : item['user']['name'],
             "retweet_count" : item['retweet_count'],
             "fav_count" : item['favorite_count'],
-            "sentiment" : sentiment(item['text'])
+            "sentiment" : sentiment(item['text']),
+            "sum":0,
+            "pos":0,
+            "neg":0,
+            "nat":0
         }
         dicts_search.append(dict_item_search)
     
@@ -50,7 +54,11 @@ def searchTweet(keywords):
             "user_name" : dicts_search[i]['user_name'],
             "retweet_count" : dicts_search[i]['retweet_count'],
             "fav_count" : dicts_search[i]['fav_count'],
-            "sentiment" : sentiment(item['text'])
+            "sentiment" : sentiment(item['text']),
+            "sum":0,
+            "pos":0,
+            "neg":0,
+            "nat":0
         })
         
     with open('searchTwt.json', 'w') as outfile:
@@ -75,7 +83,11 @@ def trackingTweet(hashtag):
             "user_name" : item['user']['name'],
             "retweet_count" : item['retweet_count'],
             "fav_count" : item['favorite_count'],
-            "sentiment" : sentiment(item['text'])
+            "sentiment" : sentiment(item['text']),
+            "sum":0,
+            "pos":0,
+            "neg":0,
+            "nat":0
         }
 
         dicts_track.append(dict_item_track)
@@ -88,7 +100,11 @@ def trackingTweet(hashtag):
             "user_name" : dicts_track[i]['user_name'],
             "retweet_count" : dicts_track[i]['retweet_count'],
             "fav_count" : dicts_track[i]['fav_count'],
-            "sentiment" : sentiment(item['text'])
+            "sentiment" : sentiment(item['text']),
+            "sum":0,
+            "pos":0,
+            "neg":0,
+            "nat":0
         })
         
         with open('trackTwt.json', 'w') as outfile:
@@ -108,10 +124,10 @@ def getTrending(auth):
 ssl._create_default_https_context = ssl._create_unverified_context
 
 payloads = {
-    'consumer_key' : 'x',
-    'consumer_secret' : 'x',
-    'access_token_key' : 'xx',
-    'access_token_secret' : 'x'
+    'consumer_key' : 'fzxvRuTrMvFrGOsULifyGUJyC',
+    'consumer_secret' : 'nuwjhfDZPMyRSK42gzxKi8rhqohON3dvo5NBQVIxcV0pBPlnSo',
+    'access_token_key' : '970858119394807808-IgFxFXUIZRMxEDlPxwNBzSb72x1NJx4',
+    'access_token_secret' : 'JlUEodSz2Pb0mflS2uE5LIfgFfKlL9yaJWoz3aM83x6Xk'
 }
 
 # TwitterAPI : search, tracking, post
@@ -123,9 +139,8 @@ auth.set_access_token(payloads['access_token_key'], payloads['access_token_secre
 
 
 # TEST 
-find_hashtag = ['#มธ', '#ธรรมศาสตร์', '#ทีมมธ']
+find_hashtag = ['#มธ', '#ธรรมศาสตร์', '#ทีมมธ','#admission61','#admission']
 # getTrending(auth)
 for i in range(len(find_hashtag)):
     searchTweet(find_hashtag[i])
-# trackingTweet('#BNK48')
-
+# trackingTweet('#มธ')
