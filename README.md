@@ -26,7 +26,7 @@ getTrending(auth)
 ```
 >you can change your location by WOEID in ..
 ```
-api.trends_place(23424960)
+api.trends_place(`23424960`)
 ```
 
 ### Search tweet (recommended hashtag)
