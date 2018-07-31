@@ -124,10 +124,10 @@ def getTrending(auth):
 ssl._create_default_https_context = ssl._create_unverified_context
 
 payloads = {
-    'consumer_key' : 'fzxvRuTrMvFrGOsULifyGUJyC',
-    'consumer_secret' : 'nuwjhfDZPMyRSK42gzxKi8rhqohON3dvo5NBQVIxcV0pBPlnSo',
-    'access_token_key' : '970858119394807808-IgFxFXUIZRMxEDlPxwNBzSb72x1NJx4',
-    'access_token_secret' : 'JlUEodSz2Pb0mflS2uE5LIfgFfKlL9yaJWoz3aM83x6Xk'
+    'consumer_key' : 'x',
+    'consumer_secret' : 'x',
+    'access_token_key' : 'x',
+    'access_token_secret' : 'x'
 }
 
 # TwitterAPI : search, tracking, post
